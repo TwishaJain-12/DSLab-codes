@@ -43,8 +43,8 @@ int main()
         }
     }
     // sp1
-    int t1[nz1][3];
-    int k = 0;
+    int t1[nz1+1][3];
+    int k = 1;
     cout << endl
          << "The matrix1 is: " << endl;
     for (int i = 0; i < r1; i++)
@@ -61,10 +61,13 @@ int main()
             }
         }
         cout << endl;
+        t1[0][0]=r1;
+        t1[0][1]=c1;
+        t1[0][2]=nz1;
     }
     // sp2
-    int t2[nz2][3];
-    k = 0;
+    int t2[nz2+1][3];
+    k = 1;
     cout << endl
          << "The matrix2 is: " << endl;
     for (int i = 0; i < r2; i++)
@@ -83,21 +86,24 @@ int main()
         cout << endl;
     }
     cout << endl;
+    t2[0][0]=r2;
+    t2[0][1]=c2;
+    t2[0][2]=nz2;
     // print sparse 1 & 2
     cout << "Sparse matrix 1 is: " << endl;
-    for (int i = 0; i < nz1; i++)
+    for (int i = 0; i <= nz1; i++)
     {
         cout << t1[i][0] << "  " << t1[i][1] << "  " << t1[i][2] << endl;
     }
     cout << "Sparse matrix 2 is: " << endl;
-    for (int i = 0; i < nz2; i++)
+    for (int i = 0; i <= nz2; i++)
     {
         cout << t2[i][0] << "  " << t2[i][1] << "  " << t2[i][2] << endl;
     }
 
-    int i = 0, j = 0, t3[nz1 + nz2][3];
-    k = 0;
-    while (i < nz1 && j < nz2)
+    int i = 1, j = 1, t3[100][3];
+    k = 1;
+    while (i <= nz1 && j <= nz2)
     {
         if (t1[i][0] == t2[j][0] && t1[i][1] == t2[j][1])
         {
@@ -139,9 +145,12 @@ int main()
         t3[k][2] = t2[j][2];
         k++;
     }
+    t3[0][0]=r1;
+    t3[0][1]=c1;
+    t3[0][2]=k-1;
 
     cout << "Sparse matrix for addition of 1 & 2 is: " << endl;
-    for (int i = 0; i < k; i++)
+    for (int i = 0; i <= k; i++)
     {
         cout << t3[i][0] << "  " << t3[i][1] << "  " << t3[i][2] << endl;
     }
