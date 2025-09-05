@@ -102,7 +102,3 @@ int main(){
     cout<<"The program has been exited!"<<endl;
     return 0;
 }
-
-
-
-
