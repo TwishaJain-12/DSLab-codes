@@ -47,7 +47,7 @@ void insertAtTail(Node* &head, Node* &tail, int d){
 
 void insertAtPos(Node* &head, Node* &tail, int ivalue, int d){
     Node* temp=head; //traverse
-    while(temp->next!=NULL){
+    while(temp!=NULL){
         if(ivalue==temp->data){
             Node* newNode = new Node(d);
             newNode->next = temp->next;
@@ -88,7 +88,7 @@ void deleteNode(int ivalue, Node* &head, Node* &tail){
 void search(Node* &head, int ivalue){
     Node* temp = head;
     int cnt=1;
-    while(temp->next != NULL){
+    while(temp != NULL){
         if(ivalue== temp->data){
             cout<<"The node was found at "<<cnt<<" position (from head)"<<endl;
             break;
@@ -96,7 +96,9 @@ void search(Node* &head, int ivalue){
         temp=temp->next;
         cnt++;
     }
-    cout<<"Element not found!"<<endl;
+    if(temp==NULL){
+        cout<<"Element not found!"<<endl;
+    }
 }
 
 void print(Node* &head){

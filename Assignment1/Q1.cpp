@@ -12,70 +12,70 @@ void insertArr(int arr[], int &n);
 void deleteArr(int arr[], int &n);
 void linearSearch(int arr[], int &n);
 
-int main(){
+int main(){   
+    do{
+        displayMenu();
+        char input;
     
+        switch(menu){
+            case 1: //create
+                createArr(arr, n);
+                break;
+            
+            case 2: //display
+                cout<<"Has array been created(Y/N): ";
+                cin>>input;
+                if(input=='Y'){
+                    displayArr(arr, n);
+                }
+                else{
+                    createArr(arr, n);
+                    displayArr(arr, n);
+                }
+                break;
+            
+            case 3: //insert
+                cout<<"Has array been created(Y/N): ";
+                cin>>input;
+                if(input=='Y'){
+                    insertArr(arr, n);
+                }
+                else{
+                    createArr(arr, n);
+                    displayArr(arr, n);
+                    insertArr(arr, n);
+                }
+                break;
     
-    displayMenu();
-    char input;
-
-    switch(menu){
-        case 1: //create
-            createArr(arr, n);
-            break;
-        
-        case 2: //display
-            cout<<"Has array been created(Y/N): ";
-            cin>>input;
-            if(input=='Y'){
-                displayArr(arr, n);
-            }
-            else{
-                createArr(arr, n);
-                displayArr(arr, n);
-            }
-            break;
-        
-        case 3: //insert
-            cout<<"Has array been created(Y/N): ";
-            cin>>input;
-            if(input=='Y'){
-                insertArr(arr, n);
-            }
-            else{
-                createArr(arr, n);
-                displayArr(arr, n);
-                insertArr(arr, n);
-            }
-            break;
-
-        case 4: //delete
-            cout<<"Has array been created(Y/N): ";
-            cin>>input;
-            if(input=='Y'){
-                deleteArr(arr, n);
-            }
-            else{
-                createArr(arr, n);
-                displayArr(arr, n);
-                deleteArr(arr, n);
-            }
-            break;
-
-        case 5: //linear search
-            cout<<"Has array been created(Y/N): ";
-            cin>>input;
-            if(input=='Y'){
-                linearSearch(arr, n);
-            }
-            else{
-                createArr(arr, n);
-                linearSearch(arr, n);
-            }
-            break;
-        
-        case 6: 
-            cout<<"The program has been exited";
-    }
+            case 4: //delete
+                cout<<"Has array been created(Y/N): ";
+                cin>>input;
+                if(input=='Y'){
+                    deleteArr(arr, n);
+                }
+                else{
+                    createArr(arr, n);
+                    displayArr(arr, n);
+                    deleteArr(arr, n);
+                }
+                break;
+    
+            case 5: //linear search
+                cout<<"Has array been created(Y/N): ";
+                cin>>input;
+                if(input=='Y'){
+                    linearSearch(arr, n);
+                }
+                else{
+                    createArr(arr, n);
+                    linearSearch(arr, n);
+                }
+                break;
+            
+            case 6: 
+                cout<<"The program has been exited";
+        }
+    }while(menu<6);
 
     return 0;
 }

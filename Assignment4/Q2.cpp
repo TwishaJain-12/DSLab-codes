@@ -2,9 +2,86 @@
 Queues: enqueue(), dequeue(), isEmpty(), isFull(), display(), and peek().*/
 #include<iostream>
 using namespace std;
+/*class Queue{
+    int size=5;
+    int q[5];
+    int cursize=0;
+    int start=-1;
+    int end=-1;
+
+    public:
+    void enqueue(int x){
+        if(cursize==size){
+            //queue is full
+            cout<<"The queue is full. No more elements can be inserted!"<<endl;
+        }
+
+        if(cursize==0){
+            start=0;
+            end=0;
+        }
+        else{
+            end=(end+1)%size;
+        }
+        q[end]=x;
+        cursize=cursize+1;
+    }
+
+    int dequeue(){
+        if(cursize==0){
+            cout<<"The queue is empty!"<<endl;
+        }
+        int ele=q[start];
+        if(cursize==1){
+            start=-1;
+            end=-1;
+        }
+        else{
+            start=(start+1)%size;
+        }
+        cursize=cursize-1;
+        return ele;
+    }
+
+    bool isEmpty(){
+        if(cursize==0){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
+    bool isFull(){
+        if(cursize==size){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
+    int peek(){
+        if(isEmpty()){
+            cout<<"The queue is empty!"<<endl;
+        }
+        return q[start];
+    }
+
+    void display(){
+        if(isEmpty()){
+            cout<<"The queue is empty!"<<endl;
+        }
+        for(int i=0; i<size; i++){
+            cout<<q[i]<<"\t";
+        }
+        cout<<endl;
+    }
+};*/
+
 class Queue{
-    int size=10;
-    int q[10];
+    int size=5;
+    int q[5];
     int front=-1;
     int rear=-1;
 
@@ -20,7 +97,7 @@ class Queue{
     }
 
     bool isFull(){
-        if(rear==size-1){
+        if((rear+1)%size == front){
             return true;
         }
         else{
@@ -36,7 +113,7 @@ class Queue{
         if(isEmpty()){
             front=0;
         }
-        rear++;
+        rear = (rear+1)%size;
         q[rear]=x;
     }
 
@@ -52,7 +129,7 @@ class Queue{
             rear=-1;
             return;
         }
-        front++;
+        front = (front+1)%size;
     }
 
     void peek(){
@@ -65,9 +142,11 @@ class Queue{
             return;
         }
         cout<<"QUEUE: ";
-        for(int i=front; i<=rear; i++){
+        int i=front;
+        do{
             cout<<q[i]<<"\t";
-        }
+            i = (i+1)%size;
+        }while(i!= (rear+1)%size);
         cout<<endl;
     }
 };
