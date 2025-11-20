@@ -1,4 +1,4 @@
-//Selection sort
+//Selection sort - optimized
 #include<iostream>
 using namespace std;
 void selection_sort(int arr[], int n){

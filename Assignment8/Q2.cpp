@@ -12,6 +12,61 @@ public:
     }
 };
 
+Node* insert(Node* root, int d){
+    if(root==NULL){
+        root = new Node(d);
+        return root;
+    }
+
+    if(d>root->data){
+        root->right = insert(root->right, d);
+    }
+    else{
+        root->left = insert(root->left, d);
+    }
+
+    return root;
+}
+
+void takeInput(Node* &root){
+    int data;
+    cin>>data;
+    while(data!=-1){
+        root = insert(root, data);
+        cin>>data;
+    }
+}
+
+bool searchRec(Node* root, int x) {
+    if(root==NULL) return false;
+
+    if(root->data == x) return true;
+    else if(root->data>x) return searchRec(root->left, x);
+    else return searchRec(root->right, x);
+}
+
+bool searchNonRec(Node* root, int x) {
+    Node* temp = root;
+    while(temp!=NULL){
+        if(temp->data==x){
+            return true;
+        }
+        if(temp->data>x){
+            temp = temp->left;
+        }
+        else{
+            temp = temp->right;
+        }
+    }
+    return false;
+}
+
+Node* maximumEle(Node* root){
+    Node* temp = root;
+    while(temp && temp->left) temp = temp->left;
+    return temp;
+}
+
 class BST {
 public:
     Node* root;
@@ -103,4 +158,13 @@ int main(){
     Node* p = b.inorderPredecessor(b.root, x);
     if(p) cout<<"Predecessor "<<p->data; 
     else cout<<"No Predecessor";
+}
+
+int main(){
+    Node* root = NULL;
+
+    cout<<"Enter data for BST"<<endl;
+    takeInput(root);
+
+    
 }
