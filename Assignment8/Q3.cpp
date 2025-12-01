@@ -2,77 +2,123 @@
 #include <algorithm>
 using namespace std;
 
-class Node{
+class Node {
 public:
     int data;
     Node* left;
     Node* right;
-    Node(int x){ data=x; left=right=NULL; }
+    Node(int x){ 
+        data=x; 
+        left=right=NULL; 
+    }
 };
 
-class BST {
-public:
-    Node* root;
-    BST(){ 
-        root=NULL; 
+Node* insert(Node* root, int d){
+    if(root==NULL){
+        root = new Node(d);
+        return root;
     }
 
-    Node* insert(Node* node, int key){
-        if(!node) return new Node(key);
-
-        if(key<node->data) 
-            node->left = insert(node->left,key);
-        else if(key>node->data) 
-            node->right = insert(node->right,key);
-        return node;
+    if(d>root->data){
+        root->right = insert(root->right, d);
+    }
+    else{
+        root->left = insert(root->left, d);
     }
 
-    Node* minNode(Node* node){
-        while(node->left) 
-            node=node->left;
+    return root;
+}
 
-        return node;
+void takeInput(Node* &root){
+    int data;
+    cin>>data;
+    while(data!=-1){
+        root = insert(root, data);
+        cin>>data;
+    }
+}
+
+void inorderTraversal(Node* root){
+    Node* temp = root;
+    if(temp==NULL){
+        return;
     }
 
-    Node* deleteNode(Node* node, int key){
-        if(!node) return node;
+    inorderTraversal(temp->left);
+    cout<<temp->data<<"  ";
+    inorderTraversal(temp->right);
+}
 
-        if(key<node->data) 
-            node->left = deleteNode(node->left, key);
-        else if(key>node->data) 
-            node->right = deleteNode(node->right, key);
-        else{
-            if(!node->left) return node->right;
-            else if(!node->right) return node->left;
-            Node* t = minNode(node->right);
-            node->data = t->data;
-            node->right = deleteNode(node->right, t->data);
+Node* minimumEle(Node* root){
+    Node* temp = root;
+    while(temp && temp->left) temp = temp->left;
+    return temp;
+}
+
+Node* deleteFromBST(Node* root, int val){
+    //base case
+    if(root==NULL) return root;
+
+    if(root->data == val){
+        //0 child
+        if(root->left==NULL && root->right==NULL){
+            delete root;
+            return NULL;
         }
-        return node;
-    }
 
-    int maxDepth(Node* node){
-        if(!node) return 0;
-        return 1 + max(maxDepth(node->left), maxDepth(node->right));
+        //1 child
+        //left child
+        if(root->left!=NULL && root->right==NULL){
+            Node* temp = root->left;
+            delete root;
+            return temp;
+        }
+        //right child
+        if(root->right!=NULL && root->left==NULL){
+            Node* temp = root->right;
+            delete root;
+            return temp;
+        }
+
+        //2 child
+        if(root->left!=NULL && root->right!=NULL){
+            int minRight = minimumEle(root->right)->data;
+            root->data = minRight;
+            root->right = deleteFromBST(root->right, minRight);
+            return root;
+        }
     }
+    else if(root->data>val){
+        root->left = deleteFromBST(root->left, val);
+        return root;
+    }
+    else{
+        root->right = deleteFromBST(root->right, val);
+        return root;
+    }
+}
+
+int maxDepth(Node* node){
+    if(!node) return 0;
+    return 1 + max(maxDepth(node->left), maxDepth(node->right));
+}
     
-    int minDepth(Node* node){
-        if(!node) return 0;
-        return 1 + min(minDepth(node->left), minDepth(node->right));
-    }
-};
+int minDepth(Node* node){
+    if(!node) return 0;
+    return 1 + min(minDepth(node->left), minDepth(node->right));
+}
 
 int main(){
-    BST b;
-    int n; cin>>n;
-    for(int i=0;i<n;i++){ 
-        int x; 
-        cin>>x; 
-        b.root=b.insert(b.root,x); 
-    }
-    int del; 
-    cin>>del;
-    b.root=b.deleteNode(b.root,del);
-    cout<<"MaxDepth "<<b.maxDepth(b.root)<<endl;
-    cout<<"MinDepth "<<b.minDepth(b.root)<<endl;;
+    Node* root = NULL;
+
+    cout<<"Enter data for BST"<<endl;
+    takeInput(root);
+
+    inorderTraversal(root);
+
+    cout<<"max depth: "<<maxDepth(root)<<endl;
+    cout<<"min depth: "<<minDepth(root)<<endl;
+
+    root = deleteFromBST(root, 50);
+    inorderTraversal(root);
 }
