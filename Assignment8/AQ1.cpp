@@ -12,45 +12,50 @@ public:
     }
 };
 
-class Tree {
-public:
-    Node* root;
-    Tree(){ 
-        root=NULL; 
+Node* buildTree(Node* root){
+    cout<<"Enter the data: ";
+    int data;
+    cin>>data;
+    root = new Node(data);
+
+    if(data==-1){
+        return NULL;
     }
 
-    Node* insert(Node* node, int x){
-        if(!node) return new Node(x);
-        if(x<node->data) node->left=insert(node->left,x);
-        else node->right = insert(node->right, x);
-        return node;
-    }
+    cout<<"Enter the data for inserting in left of "<<data<<": ";
+    root->left = buildTree(root->left);
 
-    bool isLeaf(Node* n){ 
-        return n && !n->left && !n->right;  //left right == NULL 
-    }
+    cout<<"Enter the data for inserting in right of "<<data<<": ";
+    root->right = buildTree(root->right);
 
-    int sumLeft(Node* node){
-        if(!node) return 0;
-        int s = 0;
-        if(isLeaf(node->left)) 
-            s+= node->left->data;
-        else 
-            s+=sumLeft(node->left);
+    return root;
+}
 
-        s+=sumLeft(node->right);
-        return s;
+bool isLeaf(Node* node){
+    if(node==NULL) return false;
+    if(node->left==NULL && node->right==NULL) return true;
+    return false;
+}
+
+int SumLeftLeaves(Node* root){
+    if(!root) return 0;
+    int sum = 0;
+    if(isLeaf(root->left)){
+        sum = sum + root->left->data;
     }
-};
+    else{
+        sum = sum + SumLeftLeaves(root->left);
+    }
+    sum = sum + SumLeftLeaves(root->right);
+    return sum;
+}
 
 int main(){
-    Tree t;
-    int n; 
-    cin>>n;
-    for(int i=0;i<n;i++){ 
-        int x; 
-        cin>>x; 
-        t.root = t.insert(t.root, x); 
-    }
-    cout<<t.sumLeft(t.root);
+    cout<<endl<<"Enter BST: ";
+    Node* root = NULL;
+    root = buildTree(root);
+
+    cout<<"Sum of all left leaves of the BST is: "<<SumLeftLeaves(root)<<endl;
+
+    return 0;
 }
